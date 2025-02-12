@@ -1,0 +1,17 @@
+Ver as funcionalidades
+php artisan list
+
+Iniciar o servidor do projeto
+php artisan serve
+
+Iniciar o servidor em uma porta especifica
+php artisan serve --port={porta}
+
+Coloca o servidor/site em manutenção
+php artisan down
+
+Volta o servidor/site a ativa
+php artisan up
+
+Checar rotas
+php artisan route:list
