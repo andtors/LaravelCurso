@@ -2,8 +2,7 @@
 
 @php
 
-    
-    
+
 
 @endphp
 {{--
@@ -22,17 +21,51 @@
 @unless($fornecedores[0]['status'] == 'N')
     <h3> Ativo </h3>
 @endunless
+
+
+@foreach($fornecedores as $fornecedor)
+    @isset($fornecedor)
+        Fornecedor: {{ $fornecedor['nome'] }}
+        <br>
+        Status: {{ $fornecedor['status']}}
+        <br>
+        CNPJ: {{$fornecedor['cnpj'] ?? 'Dado não preenchido'}}
+        <br>
+    @endisset
+@endforeach
+
 --}}
 
 @isset($fornecedores)
+    @forelse($fornecedores as $fornecedor)
+            Iteração atual: {{ $loop->iteration }}
+            <br>
+            Fornecedor: {{ $fornecedor['nome']}}
+            <br>
+            Status: {{ $fornecedor['status']}}
+            <br>
+            CNPJ: {{$fornecedor['cnpj'] ?? 'Dado não preenchido'}}
+            <br>
+            Telefone: ({{$fornecedor['ddd'] ?? '' }}) {{$fornecedor['telefone'] ?? ''}}
+            <br>
+            @if($loop->first)
+                Primeira iteração do loop
+            @endif
+            @if($loop->last)
+                Ultima iteração do loop
 
-    Fornecedor: {{ $fornecedores[0]['nome']}}
-    <br>
-    Status: {{ $fornecedores[0]['status']}}
-    <br>
-    @isset($fornecedores[0]['cnpj'])
-        CNPJ: {{ $fornecedores[0]['cnpj']}}
-    @endisset
+                <br>
 
+                Total de registro: {{$loop->count}}
+            @endif
+            <hr>
+        @empty
+         Não existem forncedores cadastrados
+    @endforelse      
 @endisset
+
+<br>
+
+
+
 

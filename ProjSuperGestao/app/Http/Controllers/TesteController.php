@@ -15,4 +15,6 @@ class TesteController extends Controller
 
         return view('site.teste')->with('xyz', $p1)->with('zzz', $p2); // with
     }
+
+    
 }

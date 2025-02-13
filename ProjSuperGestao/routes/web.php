@@ -18,45 +18,10 @@ use App\Http\Controllers\FornecedorController;
 |
 */
 
-/*
-Route::get('/', function () {
-    return "Olá seja bem vindo";
-});
-
-Route::get('/sobrenos', function () {
-    return "Sobre nós";
-});
-
-Route::get('/contato', function () {
-    return "Contato";
-});
-
-Route::get(
-    '/contato/{nome}/{categoria_id}', 
-     function(
-      string $nome = "Desconhecido",
-      int $categoria_id = 1, // 1 - informação
-      ) {
-    echo "Estamos aqui $nome - $categoria_id";
-})-> where('categoria_id', '[0-9]+')-> where('nome', '[A-Za-z]+');
-// nome, categoria, assunto, mensagem
-
-Route::get('/rota1', function(){
-    echo "Rota 1";
-})->name('site.rota1');
-
-
-Route::get('/rota2', function(){
-    return redirect()->route('site.rota1');
-})->name('site.rota2');
-
-// Route::redirect('/rota2', 'rota1');
-
-*/
-
 Route::get('/', [PrincipalController::class, 'principal'])->name('site.index');
 Route::get('/sobrenos', [SobreNosController::class, 'sobreNos'])->name('site.sobrenos');
 Route::get('/contato', [ContatoController::class, 'contato'])->name('site.contato');
+Route::post('/contato', [ContatoController::class, 'contato'])->name('site.contato');
 Route::get('/login', function(){ return 'Login'; })->name('site.login');
 
 Route::prefix('/app')->group(function(){
