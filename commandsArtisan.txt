@@ -24,3 +24,21 @@ php artisan migrate
 
 Fazer rollback de uma migration 
 php artisan migrate:rollback --step=2
+
+Verifica as migrates e se foram executadas
+php artisan migrate:status
+
+Resetar migrates
+php artisan migrate:reset
+
+Reseta e executa novamente as migrates
+php artisan migrate:refresh
+
+Realiza o drop das migrates e depois os migrates(ignora rollbacks)
+php artisan migrate:fresh
+
+
+
+
+
+
