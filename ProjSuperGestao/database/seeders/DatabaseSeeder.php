@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        /* $this->call(FornecedorSeeder::class);
-        $this->call(SiteContatoSeeder::class); */
-        
-        \App\Models\SiteContato::factory(100)->create();
+        $this->call(FornecedorSeeder::class);
+        $this->call(SiteContatoSeeder::class); 
+        $this->call(MotivoContato::class); 
+    
     }
 }
