@@ -19,6 +19,12 @@ php artisan route:list
 Criar models e migrates
 php artisan make:model {ModelName} -m
 
+Criar seeders
+php artisan make:seeders
+
+Criar factories
+php artisan make:factories
+
 Executar as migrates
 php artisan migrate
 
@@ -27,6 +33,7 @@ php artisan migrate:rollback --step=2
 
 Verifica as migrates e se foram executadas
 php artisan migrate:status
+
 
 Resetar migrates
 php artisan migrate:reset

@@ -14,13 +14,15 @@ class AutenticacaoMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $metodo_autenticacao, $perfil)
+    public function handle(Request $request, Closure $next)
     {
-        //return $next($request);
-        if($metodo_autenticacao){
-           return $next($request);
-        } else {
-            echo "Não autenticado";
-        }
+       session_start();
+
+       if(isset($_SESSION['email']) && $_SESSION['email'] != ''){
+            return $next($request);
+       } else {
+            return redirect()->route('site.login', ['erro' => 2]);
+       }
+       
     }
 }
