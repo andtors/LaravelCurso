@@ -29,24 +29,25 @@ class FornecedorController extends Controller
     public function adicionar(Request $request){
 
         $msg = "";
-        echo ($request->getMethod());
-        if($request->getMethod() == 'POST'){
-          $regras = [
-            'nome' => 'required|min:3|max:40',
-            'site' => 'required',
-            'uf' => 'required|min:2|max:2',
-            'email' => 'email',
-          ];
 
-          $feedback = [
-            'required' => 'O campo: :attribute deve ser preenchido',
-            'nome.min' => 'O campo nome deve ter no minimo 3 caracteres',
-            'nome.max' => 'O campo nome deve ter no maximo 40 caracteres',
-            'uf.min' => 'O campo nome deve ter no minimo 2 caracteres',
-            'uf.max' => 'O campo nome deve ter no maximo 2 caracteres',
-            'email.email' => 'O campo e-mail não foi preenchido corretamente'
-          ];
+        $regras = [
+          'nome' => 'required|min:3|max:40',
+          'site' => 'required',
+          'uf' => 'required|min:2|max:2',
+          'email' => 'email',
+        ];
 
+        $feedback = [
+          'required' => 'O campo: :attribute deve ser preenchido',
+          'nome.min' => 'O campo nome deve ter no minimo 3 caracteres',
+          'nome.max' => 'O campo nome deve ter no maximo 40 caracteres',
+          'uf.min' => 'O campo nome deve ter no minimo 2 caracteres',
+          'uf.max' => 'O campo nome deve ter no maximo 2 caracteres',
+          'email.email' => 'O campo e-mail não foi preenchido corretamente'
+        ];
+
+        if($request->getMethod() == 'POST' && $request->input('id') === null){
+          
           $request->validate($regras, $feedback);
 
           $fornecedor = new Fornecedor();
@@ -55,8 +56,30 @@ class FornecedorController extends Controller
           $msg = 'Cadastro realizado com sucesso';
 
           return view('app.fornecedor.index', ['msg' => $msg]);
+        } else if($request->getMethod() == 'POST' && $request->input('id') != null){
+
+          $request->validate($regras, $feedback);
+          
+          $fornecedor = Fornecedor::find($request->input('id'));
+
+          try{
+            $fornecedor->update($request->all());
+          } catch(\Throwable $e){
+            $msg = 'Erro ao atualizar o registro, tente novamente';
+            return view('app.fornecedor.index', ['msg' => $msg]);
+          }
+          
+          $msg = 'Fornecedor atualizado com sucesso';
+          return view('app.fornecedor.index', ['msg' => $msg]);
+
         } else if ($request->getMethod() == 'GET'){
-            return view('app.fornecedor.adicionar', ['msg' => $msg]);
-        }
+          return view('app.fornecedor.adicionar', ['msg' => $msg]);
+      }
+    }
+    public function editar($id){
+
+      $fornecedor = Fornecedor::find($id);
+
+      return view('app.fornecedor.adicionar', ['fornecedor' => $fornecedor]);
     }
 }
