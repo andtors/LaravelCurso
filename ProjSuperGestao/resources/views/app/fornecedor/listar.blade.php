@@ -16,7 +16,7 @@
         </div>
 
         <div class="informacao-pagina">
-            <div style="swidth:90%; margin-left:auto; margin-right:auto;">
+            <div style="width:90%; margin-left:auto; margin-right:auto;">
             <table border="1" width="100%">
                     <thead>
                         <tr>
@@ -41,6 +41,8 @@
                             </tr>
                         @endforeach
                     </tbody>
+                </table>
+                {{ $fornecedores->appends($request)->links() }}                    
             </div>
         </div>
     </div>
