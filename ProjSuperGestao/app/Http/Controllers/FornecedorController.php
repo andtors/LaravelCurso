@@ -41,8 +41,8 @@ class FornecedorController extends Controller
           'required' => 'O campo: :attribute deve ser preenchido',
           'nome.min' => 'O campo nome deve ter no minimo 3 caracteres',
           'nome.max' => 'O campo nome deve ter no maximo 40 caracteres',
-          'uf.min' => 'O campo nome deve ter no minimo 2 caracteres',
-          'uf.max' => 'O campo nome deve ter no maximo 2 caracteres',
+          'uf.min' => 'O campo UF deve ter no minimo 2 caracteres',
+          'uf.max' => 'O campo UF deve ter no maximo 2 caracteres',
           'email.email' => 'O campo e-mail não foi preenchido corretamente'
         ];
 

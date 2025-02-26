@@ -28,6 +28,7 @@ class ProdutoController extends Controller
     public function create()
     {
         $unidades = Unidade::all();
+       
         return view('app.produto.create', ['unidades' => $unidades]);
     }
 
@@ -40,7 +41,30 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $msg = "";
+
+        $regras = [
+          'nome' => 'required|min:3|max:40',
+          'descricao' => 'required',
+          'peso' => 'integer',
+          'unidade_id' => 'exists:unidades,id',
+        ];
+
+        $feedback = [
+          'required' => 'O campo: :attribute deve ser preenchido',
+          'nome.min' => 'O campo nome deve ter no minimo 3 caracteres',
+          'nome.max' => 'O campo nome deve ter no maximo 40 caracteres',
+          'peso.integer' => 'O campo peso deve ser um número inteiro',
+          'unidade_id.exists' => 'A unidade de medida informada não existe',
+        ];
+
+        $request->validate($regras, $feedback);
+        
+        Produto::create($request->all());
+        $msg = "Produto cadastrado com sucesso";
+
+        $produtos = Produto::paginate(10);
+        return view('app.produto.index', ['produtos' => $produtos,'msg' => $msg, 'request' => $request->all()]);
     }
 
     /**
@@ -51,7 +75,7 @@ class ProdutoController extends Controller
      */
     public function show(Produto $produto)
     {
-        //
+        return view('app.produto.show', ['produto' => $produto]);
     }
 
     /**
@@ -62,7 +86,8 @@ class ProdutoController extends Controller
      */
     public function edit(Produto $produto)
     {
-        //
+        $unidades = Unidade::all();
+        return view('app.produto.edit', ['produto' => $produto, 'unidades' => $unidades]);
     }
 
     /**
@@ -74,7 +99,9 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, Produto $produto)
     {
-        //
+        $produto->update($request->all());
+        $msg = 'Produto atualizado com sucesso';
+        return redirect()->route('produto.show', ['produto' => $produto->id]);
     }
 
     /**
@@ -85,6 +112,8 @@ class ProdutoController extends Controller
      */
     public function destroy(Produto $produto)
     {
-        //
+        $produto->delete();
+        return redirect()->route('produto.index');
     }
+
 }
