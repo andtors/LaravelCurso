@@ -82,4 +82,19 @@ class FornecedorController extends Controller
 
       return view('app.fornecedor.adicionar', ['fornecedor' => $fornecedor]);
     }
+
+    public function excluir($id){
+      
+      $msg = "";
+      
+      try{
+        Fornecedor::find($id)->delete();
+      } catch(\Throwable $e){
+        $msg = 'Erro ao deletar o registro, tente novamente';
+        return view('app.fornecedor.index', ['msg' => $msg]);
+      }
+      
+      $msg = "Fornecedor deletado com sucesso";
+      return view('app.fornecedor.index', ['msg' => $msg]);
+    }
 }
