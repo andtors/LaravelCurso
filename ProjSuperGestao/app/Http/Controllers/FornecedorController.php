@@ -95,6 +95,6 @@ class FornecedorController extends Controller
       }
       
       $msg = "Fornecedor deletado com sucesso";
-      return view('app.fornecedor.index', ['msg' => $msg]);
+      return view('app.fornecedor.index')->with('msg', 'Produto deletado com sucesso');
     }
 }
