@@ -6,6 +6,13 @@
 @endif
         @csrf
         <input type="hidden" name="id" value="{{ $produto_detalhe->id ?? ''}}">
+        <select name="fornecedor_id">
+            <option>Selecione um Fornecedor</option>
+            @foreach($fornecedores as $fornecedor)
+            <option value="{{$fornecedor->id}}" {{$produto->fornecedor_id ?? old('fornecedor_id') == $fornecedor->id ? 'selected' : ''}} >{{$fornecedor->nome}}</option>
+            @endforeach
+        </select>    
+        {{ $errors->has('fornecedor_id') ? $errors->first('fornecedor_id') : ''}}
         <input type="text" name="produto_id" value="{{ $produto_detalhe->produto_id ?? old('produto_id') }}" placeholder="ID do Produto" class="borda-preta">
         {{ $errors->has('produto_id') ? $errors->first('produto_id') : ''}}
         <input type="text" name="comprimento" value="{{ $produto_detalhe->comprimento ?? old('comprimento')}}" placeholder="Comprimento do Produto" class="borda-preta">
