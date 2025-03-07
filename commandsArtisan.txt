@@ -44,6 +44,8 @@ php artisan migrate:refresh
 Realiza o drop das migrates e depois os migrates(ignora rollbacks)
 php artisan migrate:fresh
 
+Criar um corpo de e-mail com o esqueleto já pronto e view
+php artisan make:mail MensagemTesteMail --markdown emails.mensagem-teste
 
 
 
