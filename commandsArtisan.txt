@@ -34,7 +34,6 @@ php artisan migrate:rollback --step=2
 Verifica as migrates e se foram executadas
 php artisan migrate:status
 
-
 Resetar migrates
 php artisan migrate:reset
 
@@ -44,8 +43,17 @@ php artisan migrate:refresh
 Realiza o drop das migrates e depois os migrates(ignora rollbacks)
 php artisan migrate:fresh
 
+Cria um Objeto e seu controller com as rotas já pré-estabelecidas 
+php artisan make:resource {UserResource}
+
 Criar um corpo de e-mail com o esqueleto já pronto e view
 php artisan make:mail MensagemTesteMail --markdown emails.mensagem-teste
+
+Faz com que o template e os componentes do email possam ser manipulados na view
+hp artisan vendor:publish {num do aqruivo | laravel-mail}
+
+Cria um objeto Notification que possui todos os métodos necessários para a customização de disparo de e-mail
+php artisan make:notification {RedefinirSenhaNotification}
 
 
 
