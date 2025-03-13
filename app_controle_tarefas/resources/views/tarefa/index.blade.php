@@ -5,7 +5,16 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header float-right">Tarefa</div>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            Tarefa
+                        </div>
+                        <div class="col-6">
+                            <a href="{{route('tarefa.exportacao')}}" class="float-right">XLSX</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
                    <table class="table">
                         <thead>
