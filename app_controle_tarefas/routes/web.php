@@ -24,14 +24,17 @@ Auth::routes(['verify' => true]);
         ->name('home')
         ->middleware('verified'); */
 
-Route::get('tarefa/exportacao', [TarefaController::class, 'exportacao'])
+Route::get('tarefa/exportacao/{extensao}', [TarefaController::class, 'exportacao'])
         ->name('tarefa.exportacao');        
+
+        Route::get('tarefa/exportar', [TarefaController::class, 'exportar'])
+        ->name('tarefa.exportar');   
 
 Route::resource('tarefa', TarefaController::class)
         ->middleware('verified');
 
 Route::get('mensagem-teste', function(){
     return new MensagemTesteMail();
-    /* Mail::to('andre.tors448@gmail.com')->send(new MensagemTesteMail());
+    /* Mail::to('andre.tors448@gsmail.com')->send(new MensagemTesteMail());
     return 'E-mail enviado com sucesso!'; */
 });
