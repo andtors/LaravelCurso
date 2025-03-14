@@ -1,0 +1,50 @@
+ data: {
+                mensagem: 'Primeiro template controlado pelo Vue',
+                valorTotal: 150.47,
+                logado: false,
+                hobbies: [
+                    'Dormir',
+                    'Colecionar video games',
+                    'Correr', 
+                    'Trilhas'
+                ],
+                perfil: {
+                    nome: "André de Assis Torres",
+                    site: "andretors.com.br",
+                    idade: 24,
+                    cursos: [
+                        {nome: "Laravel", cargaHoraria: "50 horas"},
+                        {nome: "Banco de Dados Relacionais", cargaHoraria: "40 Horas"}
+                    ]
+                }
+ }
+
+Acessando indice de um array: 
+{{hobbies[0]}}, {{hobbies[1]}}, {{hobbies[2]}}, {{hobbies[3]}}
+
+Acessando um objeto e seus dados: 
+{{perfil.nome}}, 
+{{perfil.site}}, 
+{{perfil.cursos[0].nome}}, 
+{{perfil.cursos[0].cargaHoraria}}
+
+---------------------------------------
+
+methods: {
+                 somar: function somar(){ // convencional
+                    return 4 + 2;
+                 },
+                 subtrair: function(){ // anonima
+                    return 4 - 2;
+                 },
+                 multiplicar: () => { // arrow function
+                    return 4 * 2;
+                 },
+                 multiplicar2: () => 5 * 2, // arrow com return implicito
+                 dividir() {    // forma enxuta
+                    return 4 / 2; 
+                 },
+                 numeroAleatorio(){
+                    return Math.random();
+                 }
+            }
