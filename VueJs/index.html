@@ -7,28 +7,45 @@
     <title>Document</title>
     <style>
         
-
-
     </style>
 </head>
     <body>
         
         <div id="app">
-            <div v-html="elementosHTML"></div>
+           <span>Paciente: </span><input type="text" v-model="paciente">
+            <br>
+            <ul>
+                <li v-for="p in lista">{{p.nome}}, {{p.idade}}</li>
+            </ul>
         </div>
 
         <script>
-    
             const vm = new Vue({
                 el: '#app',
                 data: {
-                    elementosHTML: '<p><b>Site</b></p><a href="https://jorgesantana.net.br">Jorge Sant Anna</a>'
+                    paciente: "",
+                    pacientes: [
+                        {nome:'Jorge Sant', idade: 32}, 
+                        {nome:'João Santos', idade:45}, 
+                        {nome:'José Augusto', idade: 18}, 
+                        {nome:'Júnior Silva', idade: 20}, 
+                        {nome:'Julho Nogueira', idade: 50}, 
+                    ],
+                    lista: []
                 },
                 methods: {
                     
+                },
+                computed: {
+                    
+                },
+                watch: {
+                    paciente(valorNovo){
+                        console.log(valorNovo)
+                        this.lista = this.pacientes.filter(p => p.nome.match(valorNovo))
+                    }
                 }
             });
-
         </script>
     </body>
 </html>
