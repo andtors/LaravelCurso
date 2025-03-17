@@ -17,9 +17,12 @@
             <ul>
                 <li v-for="p in lista">{{p.nome}}, {{p.idade}}</li>
             </ul>
+            
         </div>
-
+        
         <script>
+
+
             const vm = new Vue({
                 el: '#app',
                 data: {
@@ -31,10 +34,12 @@
                         {nome:'Júnior Silva', idade: 20}, 
                         {nome:'Julho Nogueira', idade: 50}, 
                     ],
-                    lista: []
+                    lista: [],
+                    marcas: []
                 },
                 methods: {
                     
+
                 },
                 computed: {
                     
@@ -45,7 +50,7 @@
                         this.lista = this.pacientes.filter(p => p.nome.match(valorNovo))
                     }
                 }
-            });
+            }); 
         </script>
     </body>
 </html>

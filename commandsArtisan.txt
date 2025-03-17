@@ -55,6 +55,12 @@ hp artisan vendor:publish {num do aqruivo | laravel-mail}
 Cria um objeto Notification que possui todos os métodos necessários para a customização de disparo de e-mail
 php artisan make:notification {RedefinirSenhaNotification}
 
+Criação de modelo e migration
+php artisan make:model -mcr {{Model}}
+
+Criação de tudo, model, migration, seeder e factory
+php artisan make:model --all {{Model}}
+
 
 
 
