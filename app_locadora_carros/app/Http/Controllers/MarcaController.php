@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-USE Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Marca;
 use Illuminate\Http\Request;
 
@@ -58,7 +58,7 @@ class MarcaController extends Controller
     public function show($id)
     {
 
-        $marca = $this->marca->find($id);
+        $marca = $this->marca->with('modelos')->find($id);
 
         if($marca === null){
             return response()->json(["erro" => "Recurso pesquisado não existe"] ,404);
@@ -105,13 +105,17 @@ class MarcaController extends Controller
             Storage::disk('public')->delete($marca->imagem);
         }
 
-        $image = $request->file('imagem');
-        $imagem_urn = $image->store('imagens', 'public');
+        $marca->fill($request->all());
         
-        $marca->update([
-            'nome' => $request->nome,
-            'imagem' => $imagem_urn
-        ]);
+        if(!$request->file('imagem')){
+            $image = $marca->imagem;
+        } else {
+            $image = $request->file('imagem');
+            $imagem_urn = $image->store('imagens', 'public');
+            $marca->imagem = $imagem_urn;
+        }
+    
+        $marca->save();
     
         return response()->json($marca, 200);
     }

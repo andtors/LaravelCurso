@@ -28,7 +28,7 @@ class ProdutoController extends Controller
                 $produtos[$key]['largura'] = $produtoDetalhe->largura;
                 $produtos[$key]['altura'] = $produtoDetalhe->altura;
             }    
-        }        */ 
+        } */ 
 
         return view('app.produto.index', ['produtos' => $produtos, 'request' => $request->all()]);
     }
