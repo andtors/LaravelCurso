@@ -61,6 +61,20 @@ php artisan make:model -mcr {{Model}}
 Criação de tudo, model, migration, seeder e factory
 php artisan make:model --all {{Model}}
 
+Criando um objeto no tinker para testes
+
+iniciando tinker
+php artisan tinker
+
+instanciando um objeto na classe model
+$user = new App\Models\User
+
+colocando uma propriedade no objeto instanciado
+$user->name = "André"
+
+salvando o objeto no banco
+$user->save()
+
 
 
 
