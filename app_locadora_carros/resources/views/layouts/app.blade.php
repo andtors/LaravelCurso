@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,11 +31,29 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Clientes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Locações</a>
+                            </li>
+                            <li class="nav-item">
+                                <div class="dropdown show" id="dropdownMenuLink">
+                                        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Véiculos</a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <a class="dropdown-item" href="#"> Carros </a>
+                                                    <a class="dropdown-item" href="#"> Marcas </a>
+                                                    <a class="dropdown-item" href="#"> Modelos </a>
+                                                </div>
+                                </div>
+                            </li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+                    
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
