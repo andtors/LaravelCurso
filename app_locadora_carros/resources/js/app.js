@@ -23,6 +23,14 @@ import Register from './components/Register.vue';
 app.component('register-component', Register);
 import Marcas from './components/Marcas.vue';
 app.component('marcas-component', Marcas);
+import InputContainer from './components/InputContainer.vue';
+app.component('input-container-component', InputContainer);
+import Table from './components/Table.vue';
+app.component('table-component', Table);
+import Card from './components/Card.vue';
+app.component('card-component', Card);
+import Modal from './components/Modal.vue';
+app.component('modal-component', Modal);
 
 /**
  * The following block of code may be used to automatically register your
