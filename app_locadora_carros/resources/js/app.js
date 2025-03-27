@@ -15,10 +15,14 @@ import { createApp } from 'vue';
 
 const app = createApp({});
 
-import Login from './components/Login.vue';
-app.component('login-component', Login);
 import Home from './components/Home.vue';
 app.component('home-component', Home);
+import Login from './components/Login.vue';
+app.component('login-component', Login);
+import Register from './components/Register.vue';
+app.component('register-component', Register);
+import Marcas from './components/Marcas.vue';
+app.component('marcas-component', Marcas);
 
 /**
  * The following block of code may be used to automatically register your
