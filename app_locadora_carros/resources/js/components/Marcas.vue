@@ -32,16 +32,32 @@
                 <card-component titulo="Relação de marcas">
 
                     <template v-slot:conteudo>
-                        <table-component>
+                        <table-component :dados="marcas.data" :titulos="{
+                            id: {titulo: 'ID', tipo: 'text'},
+                            nome: {titulo: 'Nome', tipo: 'text'},
+                            imagem: {titulo: 'Imagem', tipo: 'imagem'},
+                            created_at: {titulo: 'Data de criação', tipo: 'data'},
+                        }">
                         </table-component>
                     </template>
 
                     <template v-slot:rodape>
-                        <div>
-                            <button type="button" class="btn btn-primary btn-sm float-end" data-toggle="modal" data-target="#modalMarca">Adicionar</button>
+                       
+                        <div class="row">
+                            <div class="col-10">
+                                <paginate-component>
+                                    <li v-for="l, key in marcas.links" :class="l.active ? 'page-item active' : 'page-item' " :key="key" @click="paginacao(l)">
+                                        <a class="page-link"  v-html="l.label"></a>
+                                    </li>
+                                </paginate-component>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary btn-sm float-end" data-toggle="modal" data-target="#modalMarca">Adicionar</button>
+                            </div>
                         </div>
+                    
                     </template>
-
+                    
                 </card-component>
             </div>
         </div>
@@ -90,10 +106,16 @@
                 arquivoImagem: [],
                 transacaoStatus: '',
                 transacaoDetalhes: {},
-                marcas: []
+                marcas: { data: [] }
             }
         },
         methods: {
+            paginacao(l){
+                if(l.url){
+                    this.urlBase = l.url // ajustando a url de consulta
+                    this.carregarLista() // requisitando a url conforme consulta
+                }
+            },
             carregarLista(){
 
                 let config = {
@@ -106,7 +128,7 @@
                 axios.get(this.urlBase, config)
                     .then(response => {
                         this.marcas = response.data
-                        console.log(this.marcas)
+                       
                     }) 
                     .catch(errors => {
                         console.log(errors)
