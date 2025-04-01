@@ -9,13 +9,13 @@
                         <div class="form-group row">
                             <div class="col form-group mb-3">
                                 <input-container-component titulo="ID" id="inputId" id-help="idHelp" texto-ajuda="Opcional. Informe o id da marca">
-                                     <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" placeholder="ID" >
+                                     <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" placeholder="ID" v-model="busca.id">
                                 </input-container-component>
         
                             </div>
                             <div class="col form-group mb-3">
                                 <input-container-component titulo="Nome da marca" id="inputNome" id-help="nomeHelp" texto-ajuda="Opcional. Informe o nome da marca">
-                                     <input type="number" class="form-control" id="inputNome" aria-describedby="nomeHelp" placeholder="Nome da marca" >
+                                     <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" placeholder="Nome da marca" v-model="busca.nome">
                                 </input-container-component>
 
                             </div>
@@ -24,7 +24,7 @@
 
                     <template v-slot:rodape>
                         <div>
-                            <button type="submit" class="btn btn-primary btn-sm float-end">Pesquisar</button>
+                            <button type="submit" class="btn btn-primary btn-sm float-end" @click="pesquisar()">Pesquisar</button>
                         </div>
                     </template>
                 </card-component>
@@ -102,22 +102,51 @@
         data() {
             return {
                 urlBase: "http://localhost:8000/api/v1/marca",
+                urlPaginacao: '',
+                urlFiltro: '',
                 nomeMarca: '',
                 arquivoImagem: [],
                 transacaoStatus: '',
                 transacaoDetalhes: {},
-                marcas: { data: [] }
+                marcas: { data: [] },
+                busca: { id: '', nome: '' }
             }
         },
         methods: {
+            pesquisar(){
+                
+                let filtro = ''
+                for(let chave in this.busca){    
+
+                    if(this.busca[chave]){
+                        
+                        if(filtro != ''){
+                            filtro += ";"
+                        }
+
+                        filtro += chave + ":like:" + this.busca[chave]
+
+                    }
+                }
+
+                if(filtro != ''){
+                    this.urlPaginacao = 'page=1'
+                    this.urlFiltro = '&filtro=' + filtro
+                } else {
+                    this.urlFiltro = ''
+                }
+
+                this.carregarLista()
+            },  
             paginacao(l){
                 if(l.url){
-                    this.urlBase = l.url // ajustando a url de consulta
+                    //this.urlBase = l.url // ajustando a url de consulta
+                    this.urlPaginacao = l.url.split('?')[1]
                     this.carregarLista() // requisitando a url conforme consulta
                 }
             },
             carregarLista(){
-
+                let url = this.urlBase + '?' + this.urlPaginacao + this.urlFiltro
                 let config = {
                     headers: {
                         'Accept': 'application/json',
@@ -125,7 +154,7 @@
                     }
                 }
 
-                axios.get(this.urlBase, config)
+                axios.get(url, config)
                     .then(response => {
                         this.marcas = response.data
                        
