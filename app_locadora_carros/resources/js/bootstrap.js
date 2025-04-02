@@ -32,3 +32,52 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
 //     enabledTransports: ['ws', 'wss'],
 // });
+
+// Interceptar requests da aplicação
+axios.interceptors.request.use(
+    config => {
+
+        // recuperando o token dos cookies
+        let token = document.cookie.split(';').find(indice => indice.includes('token='))
+
+        token = token.split('=')[1]
+        token = "Bearer " + token
+
+        // definir para todas as requisições os parametros de accept e authorization
+        config.headers['Accept'] = 'application/json',
+        config.headers.Authorization = token
+
+        console.log('Interceptando o request', config)
+        return config
+    },
+    errors => {
+        console.log('Erro na requisição', errors)
+        return Promise.reject(errors)
+    }
+)
+
+// Interceptar response da aplicação
+axios.interceptors.response.use(
+    response => {
+        console.log('Interceptando o response', response)
+        return response
+    },
+    errors => {
+        console.log('Erro na resposta', errors)
+        if(errors.response.status == 401 && errors.response.data.message == 'Token has expired'){
+            console.log('Fazer uma nova requisição para rota refresh')
+            axios.post('http://localhost:8000/api/refresh')
+                .then(response => {
+                    console.log('Refresh feito!', response)
+
+                    document.cookie = 'token='+response.data+';SameSite=Lax'
+
+                    console.log('Token atualizado!',  response.data)
+
+                    window.location.reload()
+                })
+        }
+
+        return Promise.reject(errors)
+    }
+)

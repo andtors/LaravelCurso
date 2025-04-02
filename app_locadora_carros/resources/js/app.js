@@ -4,15 +4,17 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
 import './bootstrap';
 import { createApp } from 'vue';
 import { createStore } from 'vuex'
+
 
 const store = createStore({
     state() {
         return{
             item: {},
-            transacao: { status: '', mensagem: '' }
+            transacao: { status: '', mensagem: '', dados: '' }
         }
     }
 })
@@ -22,6 +24,7 @@ const app = createApp({
 })
 
 app.use(store)
+
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin

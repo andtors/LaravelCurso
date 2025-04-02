@@ -1,5 +1,6 @@
 
 <template>
+    
     <div>
         <table class="table table-hover">
             <thead>
@@ -12,7 +13,9 @@
                 <tr v-for="obj, chave in dadosFiltrados" :key="chave">
                     <td v-for="valor, chaveValor in obj" :key="chaveValor">
                         <span v-if="titulos[chaveValor].tipo == 'text'">{{ valor }}</span>
-                        <span v-if="titulos[chaveValor].tipo == 'data'">{{ valor }}</span>
+                        <span v-if="titulos[chaveValor].tipo == 'data'">
+                            {{  formatarData(valor) }}
+                        </span>
                         <span v-if="titulos[chaveValor].tipo == 'imagem'">
                             <img :src="'/storage/'+valor" width="50" height="50">
                         </span>
@@ -29,13 +32,21 @@
 </template>
 
 <script>
+import { useDateFormat } from '@vueuse/core'
+
     export default {
         props: ['dados', 'titulos', 'visualizar', 'atualizar', 'remover'],
         methods: {
             setStore(obj){
                 this.$store.state.transacao.status = ''
                 this.$store.state.transacao.mensagem = ''
+                this.$store.state.transacao.dados = ''
                 this.$store.state.item = obj
+            },
+            formatarData(d){
+                const formattedDate = useDateFormat(d, "DD/MM/YYYY HH:mm:ss");
+
+                return formattedDate
             }
         },  
         computed: {
