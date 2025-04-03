@@ -35,7 +35,7 @@
                     <ul class="navbar-nav me-auto">
                         @auth
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Clientes</a>
+                                <a class="nav-link" href="{{route('clientes')}}">Clientes</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Locações</a>
@@ -47,7 +47,7 @@
                                                     <a class="dropdown-item" href="#"> Carros </a>
                                                     <div class="dropdown-divider"> </div>
                                                     <a class="dropdown-item" href="{{route('marcas')}}"> Marcas </a>
-                                                    <a class="dropdown-item" href="#"> Modelos </a>
+                                                    <a class="dropdown-item" href="{{route('modelos')}}"> Modelos </a>
                                                 </div>
                                 </div>
                             </li>

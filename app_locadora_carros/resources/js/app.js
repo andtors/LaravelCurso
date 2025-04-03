@@ -52,6 +52,10 @@ import Alert from './components/Alert.vue';
 app.component('alert-component', Alert);
 import Paginate from './components/Paginate.vue';
 app.component('paginate-component', Paginate);
+import Clientes from './components/Clientes.vue';
+app.component('clientes-component', Clientes);
+import Modelos from './components/Modelos.vue';
+app.component('modelos-component', Modelos);
 
 /**
  * The following block of code may be used to automatically register your

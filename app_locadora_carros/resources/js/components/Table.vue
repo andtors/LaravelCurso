@@ -5,17 +5,25 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col" v-for="titulo, key in titulos" :key="key">{{ titulo.titulo }}</th>
+                    
+                    <th scope="col"  v-for="titulo, key in titulos" :key="key" >
+                        <span v-if="titulo.visivel">{{ titulo.titulo }}</span>
+                    </th>
+                    <th ></th>
                     <th v-if="visualizar.visivel || atualizar.visivel || remover.visivel"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="obj, chave in dadosFiltrados" :key="chave">
+                    
                     <td v-for="valor, chaveValor in obj" :key="chaveValor">
-                        <span v-if="titulos[chaveValor].tipo == 'text'">{{ valor }}</span>
+                        
+                        <span v-if="titulos[chaveValor].tipo == 'text' && titulos[chaveValor].visivel == true">{{ valor }}</span>
                         <span v-if="titulos[chaveValor].tipo == 'data'">
                             {{  formatarData(valor) }}
                         </span>
+
+                        
                         <span v-if="titulos[chaveValor].tipo == 'imagem'">
                             <img :src="'/storage/'+valor" width="50" height="50">
                         </span>
@@ -51,16 +59,21 @@ import { useDateFormat } from '@vueuse/core'
         },  
         computed: {
             dadosFiltrados(){
+                
                 let campos = Object.keys(this.titulos)
-                let dadosFiltrados = []
-
+                let dadosFiltrados = [] 
+                
                 this.dados.map((item, chave) => {
         
                     let itemFiltrado = {}
                     campos.forEach(campo => {
-
+                        
                         itemFiltrado[campo] = item[campo] // Sintaxe de array para atribuir valores a objetos
-                
+                        
+                        if(campo == 'marca_id'){
+                           
+                            itemFiltrado[campo] = item.marca.imagem
+                        }
                     })
                     
                     dadosFiltrados.push(itemFiltrado)

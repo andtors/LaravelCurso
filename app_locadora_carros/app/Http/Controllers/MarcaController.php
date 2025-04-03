@@ -157,4 +157,17 @@ class MarcaController extends Controller
 
         return response()->json(['msg'  => 'A marca foi deletada com sucesso!'], 200);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getMarcaNomeId()
+    {
+        $marcaRepository = new MarcaRepository($this->marca);
+
+        return response()->json($marcaRepository->getResultado());
+    }
 }
