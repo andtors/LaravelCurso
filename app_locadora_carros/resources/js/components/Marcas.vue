@@ -40,7 +40,7 @@
                             id: {titulo: 'ID', tipo: 'text', visivel: true},
                             nome: {titulo: 'Nome', tipo: 'text', visivel: true},
                             imagem: {titulo: 'Imagem', tipo: 'imagem', visivel: true},
-                            created_at: {titulo: 'Data de criação', tipo: 'data', visivel: true},
+                            created_at: {titulo: 'Data de criação', tipo: 'data', visivel: false},
                         }">
                         </table-component>
                     </template>

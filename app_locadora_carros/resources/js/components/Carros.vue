@@ -1,21 +1,21 @@
-<template>
+a<template>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-                <card-component titulo="Busca de clientes">
+                <card-component titulo="Busca de carros">
 
                     <template v-slot:conteudo>
                         <div class="form-group row">
                             <div class="col form-group mb-3">
-                                <input-container-component titulo="ID" id="inputId" id-help="idHelp" texto-ajuda="Opcional. Informe o id do cliente">
+                                <input-container-component titulo="ID" id="inputId" id-help="idHelp" texto-ajuda="Opcional. Informe o id da carro">
                                      <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" placeholder="ID" v-model="busca.id">
                                 </input-container-component>
         
                             </div>
                             <div class="col form-group mb-3">
-                                <input-container-component titulo="Nome do cliente" id="inputNome" id-help="nomeHelp" texto-ajuda="Opcional. Informe o nome do cliente">
-                                     <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" placeholder="Nome do cliente" v-model="busca.nome">
+                                <input-container-component titulo="Nome da carro" id="inputNome" id-help="nomeHelp" texto-ajuda="Opcional. Informe o nome da carro">
+                                     <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" placeholder="Nome da carro" v-model="busca.nome">
                                 </input-container-component>
 
                             </div>
@@ -29,16 +29,19 @@
                     </template>
                 </card-component>
 
-                <card-component titulo="Relação de clientes">
+                <card-component titulo="Relação de carros">
 
                     <template v-slot:conteudo>
-                        <table-component :dados="clientes.data" 
-                                        :visualizar="{ visivel: true, dataToggle: 'modal', dataTarget:'#modalClienteVisualizar'}"
-                                        :atualizar="{ visivel: true, dataToggle: 'modal', dataTarget:'#modalClienteAtualizar'}"
-                                        :remover="{ visivel: true, dataToggle: 'modal', dataTarget:'#modalClienteRemover'}"
+                        <table-component :dados="carros.data" 
+                                        :visualizar="{ visivel: true, dataToggle: 'modal', dataTarget:'#modalMarcaVisualizar'}"
+                                        :atualizar="{ visivel: true, dataToggle: 'modal', dataTarget:'#modalMarcaAtualizar'}"
+                                        :remover="{ visivel: true, dataToggle: 'modal', dataTarget:'#modalMarcaRemover'}"
                                         :titulos="{
                             id: {titulo: 'ID', tipo: 'text', visivel: true},
-                            nome: {titulo: 'Nome', tipo: 'text', visivel: true},
+                            modelo_id: {titulo: 'Modelo', tipo: 'text', visivel: true},
+                            km: {titulo: 'Km', tipo: 'text', visivel: true},
+                            placa: {titulo: 'Placa', tipo: 'text', visivel: true},
+                            disponivel: {titulo: 'Disponivel', tipo: 'text', visivel: true},
                             created_at: {titulo: 'Data de criação', tipo: 'data', visivel: false},
                         }">
                         </table-component>
@@ -49,31 +52,42 @@
                         <div class="row">
                             <div class="col-10">
                                 <paginate-component>
-                                    <li v-for="c, key in clientes.links" :class="c.active ? 'page-item active' : 'page-item' " :key="key" @click="paginacao(l)">
-                                        <a class="page-link"  v-html="c.label"></a>
+                                    <li v-for="l, key in carros.links" :class="l.active ? 'page-item active' : 'page-item' " :key="key" @click="paginacao(l)">
+                                        <a class="page-link"  v-html="l.label"></a>
                                     </li>
                                 </paginate-component>
                             </div>
-                            
                             <div class="col">
-                                <button type="button" class="btn btn-primary btn-sm float-end" data-toggle="modal" data-target="#modalCliente">Adicionar</button>
+                                <button type="button" class="btn btn-primary btn-sm float-end" data-toggle="modal" data-target="#modalMarca">Adicionar</button>
                             </div>
                         </div>
-
-                    </template>    
+                    
+                    </template>
+                    
                 </card-component>
             </div>
         </div>
-        <modal-component id="modalCliente" titulo="Adicionar cliente">
+        <modal-component id="modalMarca" titulo="Adicionar carro">
 
             <template v-slot:alertas>
                 <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Cadastro realizado com sucesso" v-if="transacaoStatus == 'adicionado'"></alert-component>
-                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro ao tentar cadastrar o cliente" v-if="transacaoStatus == 'erro'"></alert-component>
+                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro ao tentar cadastrar a carro" v-if="transacaoStatus == 'erro'"></alert-component>
             </template>
             <template v-slot:conteudo>
+                
+
                 <div class="form-group">
-                    <input-container-component titulo="Nome do cliente" id="novoNome" id-help="novonomeHelp" texto-ajuda="Informe o novo nome do cliente">
-                        <input type="text" class="form-control" id="novoNome" aria-describedby="novonomeHelp" placeholder="Nome do cliente" v-model="nomeCliente">
+                    <label for="" class="form-label">Modelos</label>
+                    <select v-model="modeloCarro" class="form-select" aria-label="Default select example">
+                        <option value="" disabled selected>Selecione</option>
+                        <option v-for="modelo in modelos" :key="modelo.id" :value="modelo.id">{{ modelo.nome }}</option>
+                    </select>
+                    <small class="text-muted">Selecione o modelo do carro</small>
+                </div>
+
+                <div class="form-group">
+                    <input-container-component titulo="Placa do carro" id="placaCarro" id-help="placaCarroHelp" texto-ajuda="Informe o a placa do carro">
+                        <input type="text" class="form-control" id="placaCarro" aria-describedby="placaCarroHelp" placeholder="Placa do carro" v-model="placaCarro">
                     </input-container-component>
                 </div>
 
@@ -85,7 +99,7 @@
 
         </modal-component>
 
-        <modal-component id="modalClienteVisualizar" titulo="Visualizar cliente">
+        <modal-component id="modalMarcaVisualizar" titulo="Visualizar carro">
             <template v-slot:alertas>
             </template>
 
@@ -95,12 +109,24 @@
                     <input type="text" :value="$store.state.item.id" disabled class="form-control">
                 </input-container-component>
 
-                <input-container-component titulo="Nome do cliente">
-                    <input type="text" :value="$store.state.item.nome" disabled class="form-control">
+                <input-container-component titulo="Modelo">
+                    <input type="text" :value="$store.state.item.modelo_id" disabled class="form-control">
+                </input-container-component>
+
+                <input-container-component titulo="Placa">
+                    <input type="text" :value="$store.state.item.placa" disabled class="form-control">
+                </input-container-component>
+
+                <input-container-component titulo="Disponivel">
+                <span class="form-control bg-body-secondary">{{ $store.state.item.disponivel === 0 ? 'Livre' : 'Alugado' }}</span>
+                </input-container-component>
+
+                <input-container-component titulo="Km">
+                    <input type="text" :value="$store.state.item.km" disabled class="form-control">
                 </input-container-component>
 
                 <input-container-component titulo="Data de criação">
-                     <span class="form-control bg-body-secondary ">{{ formatarDatas($store.state.item.created_at) }}</span>
+                    <span class="form-control bg-body-secondary ">{{ formatarDatas($store.state.item.created_at) }}</span>
                 </input-container-component>
 
             </template>
@@ -111,7 +137,7 @@
 
         </modal-component>
 
-        <modal-component id="modalClienteRemover" titulo="Remover cliente">
+        <modal-component id="modalMarcaRemover" titulo="Remover carro">
             <template v-slot:alertas>
                 <alert-component tipo="success" titulo="Transação realizada com sucesso" :detalhes="$store.state.transacao"  v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
                 <alert-component tipo="danger" titulo="Erro na transação" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'erro'"></alert-component>
@@ -123,10 +149,25 @@
                     <input type="text" :value="$store.state.item.id" disabled class="form-control">
                 </input-container-component>
 
-                <input-container-component titulo="Nome do cliente">
-                    <input type="text" :value="$store.state.item.nome" disabled class="form-control">
+                <input-container-component titulo="Modelo">
+                    <input type="text" :value="$store.state.item.modelo_id" disabled class="form-control">
                 </input-container-component>
 
+                <input-container-component titulo="Placa">
+                    <input type="text" :value="$store.state.item.placa" disabled class="form-control">
+                </input-container-component>
+
+                <input-container-component titulo="Disponivel">
+                    <span class="form-control bg-body-secondary">{{ $store.state.item.disponivel === 0 ? 'Livre' : 'Alugado' }}</span>
+                </input-container-component>
+
+                <input-container-component titulo="Km">
+                    <input type="text" :value="$store.state.item.km" disabled class="form-control">
+                </input-container-component>
+
+                <input-container-component titulo="Data de criação">
+                <span class="form-control bg-body-secondary ">{{ formatarDatas($store.state.item.created_at) }}</span>
+                </input-container-component>
             </template>
 
             <template v-slot:rodape >
@@ -135,16 +176,27 @@
             </template>
         </modal-component>
 
-        <modal-component id="modalClienteAtualizar" titulo="Atualizar cliente">
+        <modal-component id="modalMarcaAtualizar" titulo="Atualizar carro">
 
         <template v-slot:alertas>
             <alert-component tipo="success" titulo="Atualização realizada com sucesso" :detalhes="$store.state.transacao"  v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
             <alert-component tipo="danger" titulo="Erro na Atualização" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'erro'"></alert-component>
         </template>
         <template v-slot:conteudo  v-if="$store.state.transacao.status != 'sucesso'">
+
             <div class="form-group">
-                <input-container-component titulo="Nome do cliente" id="atualizarNome" id-help="atualizarnomeHelp" texto-ajuda="Informe o novo nome do cliente">
-                    <input type="text" class="form-control" id="atualizarNome" aria-describedby="atualizarnomeHelp" placeholder="Nome do cliente" v-model="$store.state.item.nome">
+                <input-container-component titulo="Placa" id="atualizarPlaca" id-help="atualizarPlacaHelp" texto-ajuda="Informe a nova placa do carro">
+                    <input type="text" class="form-control" id="atualizarPlaca" aria-describedby="atualizarPlacaHelp" placeholder="Placa do carro" v-model="$store.state.item.placa">
+                </input-container-component>
+            </div>
+
+            <div>
+                <input-container-component titulo="Disponivel" id="atualizarDisponibilidade" id-help="atualizarDisponibilidadeHelp" texto-ajuda="Altere a disponibildade do carro">
+                <select v-model="$store.state.item.disponivel" class="form-select" aria-label="Default select example">
+                    <option disabled selected>Selecione</option>
+                    <option value="0">Livre</option>
+                    <option value="1">Alugado</option>
+                </select>
                 </input-container-component>
             </div>
 
@@ -168,14 +220,20 @@ import { useDateFormat } from '@vueuse/core'
             },
         data() {
             return {
-                urlBase: "http://localhost:8000/api/v1/cliente",
+                urlBase: "http://localhost:8000/api/v1/carro",
+                urlModelo: "http://localhost:8000/api/v1/modelos-lista",
                 urlPaginacao: '',
                 urlFiltro: '',
-                nomeCliente: '',
+                nomeCarro: '',
+                modeloCarro: '',
+                placaCarro: '',
+                disponivelCarro: '',
+                kmCarro: '',
                 transacaoStatus: '',
                 transacaoDetalhes: {},
-                clientes: { data: [] },
-                busca: { id: '', nome: '' }
+                carros: { data: [] },
+                busca: { id: '', nome: '' },
+                modelos: []
             }
         },
         methods: {
@@ -185,20 +243,15 @@ import { useDateFormat } from '@vueuse/core'
             },
             atualizar(){
 
+                let url = this.urlBase + '/' + this.$store.state.item.id
+
                 let formData = new FormData()
 
                 formData.append('_method', 'patch')
-                formData.append('nome', this.$store.state.item.nome)
-                
-                let url = this.urlBase + '/' + this.$store.state.item.id
+                formData.append('disponivel', Number(this.$store.state.item.disponivel))
+                formData.append('placa', this.$store.state.item.placa)
 
-                let config = {
-                    headers: {
-                        'Content-Type' : 'multipart/form-data',
-                    }
-                }
-
-                axios.post(url, formData, config)
+                axios.post(url, formData)
                     .then(response => {
                         this.$store.state.transacao.status = 'sucesso'
                         this.$store.state.transacao.mensagem = response.data.msg
@@ -213,8 +266,8 @@ import { useDateFormat } from '@vueuse/core'
                 
             },
             fechar(){
-                novoNome.value =  '',
-                this.atualizarNome =  '',
+                this.modeloCarro = '',
+                this.placaCarro = '',
                 this.transacaoStatus = '',
                 this.transacaoDetalhes = {}
             },
@@ -233,7 +286,7 @@ import { useDateFormat } from '@vueuse/core'
                 axios.post(url, formData)
                 .then(response=> {
                     this.$store.state.transacao.status = 'sucesso'
-                    this.$store.state.transacao.mensagem = 'Registro de cliente atualizado com sucesso!'
+                    this.$store.state.transacao.mensagem = 'Registro de carro atualizado com sucesso!'
                     this.carregarLista()
                 })
                 .catch(errors => {
@@ -253,7 +306,7 @@ import { useDateFormat } from '@vueuse/core'
                             filtro += ";"
                         }
 
-                        filtro += chave + ":like:" + this.busca[chave]
+                        filtro += chave + ":like:%" + this.busca[chave] + "%"
 
                     }
                 }
@@ -279,25 +332,35 @@ import { useDateFormat } from '@vueuse/core'
 
                 axios.get(url)
                     .then(response => {
-                        this.clientes = response
-                        console.log(this.clientes)
+                        this.carros = response.data
                     }) 
                     .catch(errors => {
                         console.log(errors)
                     })
             },
+            carregarListaModelo(){
+
+                axios.get(this.urlModelo)
+                    .then(response => {
+                        this.modelos = response.data
+                    }) 
+                    .catch(errors => {
+                        console.log(errors)
+                    })
+            },
+            carregarImagem(e){
+                this.arquivoImagem = e.target.files
+            },
             salvar(){
                 let formData = new FormData()
 
-                formData.append('nome', this.nomeCliente)
-        
-                let config = {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
+                formData.append('modelo_id', this.modeloCarro)
+                formData.append('km', 0)
+                formData.append('placa', this.placaCarro)
+                formData.append('disponivel', 0)
+            
 
-                axios.post(this.urlBase, formData, config)
+                axios.post(this.urlBase, formData)
                     .then(response => {
                         this.transacaoStatus = 'adicionado'
                         this.transacaoDetalhes = {
@@ -317,7 +380,8 @@ import { useDateFormat } from '@vueuse/core'
             },
         },
         mounted(){
-            this.carregarLista()
+            this.carregarLista(),
+            this.carregarListaModelo()
         }
     }
 </script>

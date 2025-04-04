@@ -158,4 +158,17 @@ class ModeloController extends Controller
 
         return response()->json(['msg'  => 'O modelo foi deletada com sucesso!'], 200);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getModeloNomeId()
+    {
+        $modeloRepository = new ModeloRepository($this->modelo);
+
+        return response()->json($modeloRepository->getResultado());
+    }
 }

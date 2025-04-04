@@ -3,19 +3,19 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
 
-                <card-component titulo="Busca de modelos">
+                <card-component titulo="Busca de locacoes">
 
                     <template v-slot:conteudo>
                         <div class="form-group row">
                             <div class="col form-group mb-3">
-                                <input-container-component titulo="ID" id="inputId" id-help="idHelp" texto-ajuda="Opcional. Informe o id do modelo">
+                                <input-container-component titulo="ID" id="inputId" id-help="idHelp" texto-ajuda="Opcional. Informe o id do Locacação">
                                      <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" placeholder="ID" v-model="busca.id">
                                 </input-container-component>
         
                             </div>
                             <div class="col form-group mb-3">
-                                <input-container-component titulo="Nome do modelo" id="inputNome" id-help="nomeHelp" texto-ajuda="Opcional. Informe o nome do modelo">
-                                     <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" placeholder="Nome do modelo" v-model="busca.nome">
+                                <input-container-component titulo="Nome do Locacação" id="inputNome" id-help="nomeHelp" texto-ajuda="Opcional. Informe o nome do Locacação">
+                                     <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" placeholder="Nome do Locacação" v-model="busca.nome">
                                 </input-container-component>
 
                             </div>
@@ -29,22 +29,23 @@
                     </template>
                 </card-component>
 
-                <card-component titulo="Relação de modelos">
+                <card-component titulo="Relação de locacoes">
 
                     <template v-slot:conteudo>
-                        <table-component :dados="modelos.data" 
+                        <table-component :dados="locacoes.data" 
                                         :visualizar="{ visivel: true, dataToggle: 'modal', dataTarget:'#modalModeloVisualizar'}"
                                         :atualizar="{ visivel: true, dataToggle: 'modal', dataTarget:'#modalModeloAtualizar'}"
                                         :remover="{ visivel: true, dataToggle: 'modal', dataTarget:'#modalModeloRemover'}"
                                         :titulos="{
                             id: {titulo: 'ID', tipo: 'text', visivel: true},
-                            marca_id: {titulo: 'Marca', tipo: 'imagem', visivel: true},
-                            abs: {titulo: 'Air Bag', tipo: 'text', visivel: false},
-                            air_bag: {titulo: 'Abs', tipo: 'text', visivel: false},
-                            numero_portas: {titulo: 'Núm de portas', tipo: 'text', visivel: false},
-                            lugares: {titulo: 'Lugares', tipo: 'text', visivel: false},
-                            nome: {titulo: 'Nome', tipo: 'text', visivel: true},   
-                            imagem: {titulo: 'Imagem', tipo: 'imagem', visivel: true},
+                            cliente_id: {titulo: 'Cliente', tipo: 'text', visivel: true},
+                            carro_id: {titulo: 'Carro', tipo: 'text', visivel: true},
+                            data_inicio_periodo: {titulo: 'Inicio', tipo: 'data', visivel: false},
+                            data_final_previsto_periodo: {titulo: 'Previsto', tipo: 'data', visivel: false},
+                            data_final_realizado_periodo: {titulo: 'Final', tipo: 'data', visivel: false},
+                            valor_diaria: {titulo: 'Valor diario', tipo: 'text', visivel: false},
+                            km_inicial: {titulo: 'Km inicial', tipo: 'text', visivel: false},
+                            km_final: {titulo: 'Km final', tipo: 'text', visivel: false},
                             created_at: {titulo: 'Data de criação', tipo: 'data', visivel: false},
                         }">
                         </table-component>
@@ -55,7 +56,7 @@
                         <div class="row">
                             <div class="col-10">
                                 <paginate-component>
-                                    <li v-for="l, key in modelos.links" :class="l.active ? 'page-item active' : 'page-item' " :key="key" @click="paginacao(l)">
+                                    <li v-for="l, key in locacoes.links" :class="l.active ? 'page-item active' : 'page-item' " :key="key" @click="paginacao(l)">
                                         <a class="page-link"  v-html="l.label"></a>
                                     </li>
                                 </paginate-component>
@@ -70,17 +71,17 @@
                 </card-component>
             </div>
         </div>
-        <modal-component id="modalModelo" titulo="Adicionar Modelo">
+        <modal-component id="modalModelo" titulo="Adicionar Locacação">
 
             <template v-slot:alertas>
                 <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Cadastro realizado com sucesso" v-if="transacaoStatus == 'adicionado'"></alert-component>
-                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro ao tentar cadastrar a Modelo" v-if="transacaoStatus == 'erro'"></alert-component>
+                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro ao tentar cadastrar a Locacação" v-if="transacaoStatus == 'erro'"></alert-component>
             </template>
             
             <template v-slot:conteudo>
                 <div class="form-group">
-                    <input-container-component titulo="Nome do Modelo" id="novoNome" id-help="novonomeHelp" texto-ajuda="Informe o nome do Modelo">
-                        <input type="text" class="form-control" id="novoNome" aria-describedby="novonomeHelp" placeholder="Nome do Modelo" v-model="nomeModelo">
+                    <input-container-component titulo="Nome do Locacação" id="novoNome" id-help="novonomeHelp" texto-ajuda="Informe o nome do Locacação">
+                        <input type="text" class="form-control" id="novoNome" aria-describedby="novonomeHelp" placeholder="Nome do Locacação" v-model="nomeModelo">
                     </input-container-component>
                 </div>
 
@@ -118,7 +119,7 @@
                     <option value="0">Não</option>
                     <option value="1">Sim</option>
                 </select>
-                <small class="text-muted">Selecione se o modelo possui air bag</small>
+                <small class="text-muted">Selecione se o Locacação possui air bag</small>
             </div>
             
             <div class="form-group">
@@ -128,7 +129,7 @@
                     <option value="0">Não</option>
                     <option value="1">Sim</option>
                 </select>
-                <small class="text-muted">Selecione se o modelo possui ABS</small>
+                <small class="text-muted">Selecione se o Locacação possui ABS</small>
             </div>
 
             </template>
@@ -139,7 +140,7 @@
 
         </modal-component>
 
-        <modal-component id="modalModeloVisualizar" titulo="Visualizar Modelo">
+        <modal-component id="modalModeloVisualizar" titulo="Visualizar Locacação">
             <template v-slot:alertas>
             </template>
 
@@ -153,7 +154,7 @@
                 <img :src="'/storage/'+$store.state.item.marca_id" v-if="$store.state.item.marca_id" width="50" height="50">
                 </input-container-component>
 
-                <input-container-component titulo="Nome do Modelo">
+                <input-container-component titulo="Nome do Locacação">
                     <input type="text" :value="$store.state.item.nome" disabled class="form-control">
                 </input-container-component>
 
@@ -189,7 +190,7 @@
 
         </modal-component>
 
-        <modal-component id="modalModeloRemover" titulo="Remover Modelo">
+        <modal-component id="modalModeloRemover" titulo="Remover Locacação">
             <template v-slot:alertas>
                 <alert-component tipo="success" titulo="Transação realizada com sucesso" :detalhes="$store.state.transacao"  v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
                 <alert-component tipo="danger" titulo="Erro na transação" :detalhes="$store.state.transacao" v-if="$store.state.transacao.status == 'erro'"></alert-component>
@@ -205,7 +206,7 @@
                 <img :src="'/storage/'+$store.state.item.marca_id" v-if="$store.state.item.marca_id" width="50" height="50">
                 </input-container-component>
 
-                <input-container-component titulo="Nome do Modelo">
+                <input-container-component titulo="Nome do Locacação">
                     <input type="text" :value="$store.state.item.nome" disabled class="form-control">
                 </input-container-component>
 
@@ -241,7 +242,7 @@
             </template>
         </modal-component>
 
-        <modal-component id="modalModeloAtualizar" titulo="Atualizar Modelo">
+        <modal-component id="modalModeloAtualizar" titulo="Atualizar Locacação">
 
         <template v-slot:alertas>
             <alert-component tipo="success" titulo="Atualização realizada com sucesso" :detalhes="$store.state.transacao"  v-if="$store.state.transacao.status == 'sucesso'"></alert-component>
@@ -249,8 +250,8 @@
         </template>
         <template v-slot:conteudo  v-if="$store.state.transacao.status != 'sucesso'">
             <div class="form-group">
-                <input-container-component titulo="Nome do Modelo" id="atualizarNome" id-help="atualizarnomeHelp" texto-ajuda="Informe o novo nome do Modelo">
-                    <input type="text" class="form-control" id="atualizarNome" aria-describedby="atualizarnomeHelp" placeholder="Nome do Modelo" v-model="$store.state.item.nome">
+                <input-container-component titulo="Nome do Locacação" id="atualizarNome" id-help="atualizarnomeHelp" texto-ajuda="Informe o novo nome do Locacação">
+                    <input type="text" class="form-control" id="atualizarNome" aria-describedby="atualizarnomeHelp" placeholder="Nome do Locacação" v-model="$store.state.item.nome">
                 </input-container-component>
             </div>
 
@@ -283,7 +284,7 @@
                     <option value="0">Não</option>
                     <option value="1">Sim</option>
                 </select>
-                <small class="text-muted">Selecione se o modelo possui air bag</small>
+                <small class="text-muted">Selecione se o Locacação possui air bag</small>
             </div>
             
             <div class="form-group">
@@ -292,7 +293,7 @@
                     <option value="0">Não</option>
                     <option value="1">Sim</option>
                 </select>
-                <small class="text-muted">Selecione se o modelo possui ABS</small>
+                <small class="text-muted">Selecione se o Locacação possui ABS</small>
             </div>
 
         </template>
@@ -315,8 +316,9 @@ import { useDateFormat } from '@vueuse/core'
             },
         data() {
             return {
-                urlBase: "http://localhost:8000/api/v1/modelo",
-                urlBaseMarca: "http://localhost:8000/api/v1/marcas-lista",
+                urlBase: "http://localhost:8000/api/v1/locacao",
+                urlBaseCarros: "http://localhost:8000/api/v1/carros-lista",
+                urlBaseClientes: "http://localhost:8000/api/v1/clientes-lista",
                 urlPaginacao: '',
                 urlFiltro: '',
                 nomeModelo: '',
@@ -328,7 +330,7 @@ import { useDateFormat } from '@vueuse/core'
                 arquivoImagem: [],
                 transacaoStatus: '',
                 transacaoDetalhes: {},
-                modelos: { data: [] },
+                locacoes: { data: [] },
                 marcas: [],
                 busca: { id: '', nome: '' }
             }
@@ -338,15 +340,25 @@ import { useDateFormat } from '@vueuse/core'
                 const formattedDate = useDateFormat(d, "DD/MM/YYYY HH:mm:ss")
                 return formattedDate
             },
-            carregarMarcas(){
+            carregarCarros(){
 
                 axios.get(this.urlBaseMarca)
                     .then(response => {
-                        this.marcas = response.data
+                        this.carros = response.data
                     }) 
                     .catch(errors => {
                         console.log(errors)
                     })
+            },
+            carregarClientes(){
+
+            axios.get(this.urlBaseMarca)
+                .then(response => {
+                    this.clientes = response.data
+                }) 
+                .catch(errors => {
+                    console.log(errors)
+                })
             },
             atualizar(){
 
@@ -410,7 +422,7 @@ import { useDateFormat } from '@vueuse/core'
                 axios.post(url, formData)
                 .then(response=> {
                     this.$store.state.transacao.status = 'sucesso'
-                    this.$store.state.transacao.mensagem = 'Registro de Modelo atualizado com sucesso!'
+                    this.$store.state.transacao.mensagem = 'Registro de Locacação atualizado com sucesso!'
                     this.carregarLista()
                 })
                 .catch(errors => {
@@ -456,7 +468,9 @@ import { useDateFormat } from '@vueuse/core'
 
                 axios.get(url)
                     .then(response => {
-                        this.modelos = response.data
+                        this.locacoes = response.data
+                        console.log(this.locacoes)
+
                     }) 
                     .catch(errors => {
                         console.log(errors)
@@ -503,7 +517,8 @@ import { useDateFormat } from '@vueuse/core'
         },
         mounted(){
             this.carregarLista(),
-            this.carregarMarcas()
+            this.carregarCarros()
+            this.carregarClientes()
         }
     }
 </script>

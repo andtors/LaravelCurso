@@ -33,6 +33,7 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     Route::apiResource('marca', MarcaController::class);
     Route::apiResource('modelo', ModeloController::class);
     Route::get('marcas-lista', [MarcaController::class, 'getMarcaNomeId']);
+    Route::get('modelos-lista', [ModeloController::class, 'getModeloNomeId']);
 });
 
 Route::post('login', [AuthController::class, 'login']);

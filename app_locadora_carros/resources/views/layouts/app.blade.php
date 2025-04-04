@@ -38,17 +38,17 @@
                                 <a class="nav-link" href="{{route('clientes')}}">Clientes</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Locações</a>
+                                <a class="nav-link" href="{{route('locacoes')}}">Locações</a>
                             </li>
                             <li class="nav-item">
                                 <div class="dropdown show" id="dropdownMenuLink">
-                                        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Véiculos</a>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <a class="dropdown-item" href="#"> Carros </a>
-                                                    <div class="dropdown-divider"> </div>
-                                                    <a class="dropdown-item" href="{{route('marcas')}}"> Marcas </a>
-                                                    <a class="dropdown-item" href="{{route('modelos')}}"> Modelos </a>
-                                                </div>
+                                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">Véiculos</a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="{{route('carros')}}"> Carros </a>
+                                        <div class="dropdown-divider"> </div>
+                                        <a class="dropdown-item" href="{{route('marcas')}}"> Marcas </a>
+                                        <a class="dropdown-item" href="{{route('modelos')}}"> Modelos </a>
+                                    </div>
                                 </div>
                             </li>
                         @endauth

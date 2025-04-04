@@ -10,6 +10,7 @@ class LocacaoController extends Controller
 {
     public function __construct(Locacao $locacao) {
         $this->locacao = $locacao;
+
     }
 
     /**
@@ -29,7 +30,7 @@ class LocacaoController extends Controller
            $locacaoRepository->selectAtributos($request->atributos);
         } 
 
-        return response()->json($locacaoRepository->getResultado(), 200);
+        return response()->json($locacaoRepository->getResultadoPaginado(3), 200);
     }
 
     /**
@@ -65,7 +66,7 @@ class LocacaoController extends Controller
      */
     public function show($id)
     {
-        $locacao = $this->locacao->find($id);
+        $locacao = $this->locacao->with('carro')->with('cliente')->find($id);
 
         if($locacao === null){
             return response()->json(["erro" => "Recurso pesquisado não existe"] ,404);

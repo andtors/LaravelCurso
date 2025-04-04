@@ -18,12 +18,8 @@
                     
                     <td v-for="valor, chaveValor in obj" :key="chaveValor">
                         
-                        <span v-if="titulos[chaveValor].tipo == 'text' && titulos[chaveValor].visivel == true">{{ valor }}</span>
-                        <span v-if="titulos[chaveValor].tipo == 'data'">
-                            {{  formatarData(valor) }}
-                        </span>
-
-                        
+                        <span v-if="titulos[chaveValor].tipo == 'text' && titulos[chaveValor].visivel == true && titulos[chaveValor].titulo != 'Disponivel'">{{ valor }}</span>
+                        <span v-if="titulos[chaveValor].titulo == 'Disponivel'">{{ valor == 0 ? 'Livre' : 'Alugado' }}</span>
                         <span v-if="titulos[chaveValor].tipo == 'imagem'">
                             <img :src="'/storage/'+valor" width="50" height="50">
                         </span>
@@ -74,12 +70,22 @@ import { useDateFormat } from '@vueuse/core'
                            
                             itemFiltrado[campo] = item.marca.imagem
                         }
+
+                        if(campo == 'modelo_id'){
+                           
+                           itemFiltrado[campo] = item.modelo.nome
+                       }
+
+                       if(campo == 'cliente_id'){
+                            itemFiltrado[campo] = item.cliente.nome
+                       }
                     })
                     
                     dadosFiltrados.push(itemFiltrado)
         
                 })
                 
+                console.log(dadosFiltrados)
                 return dadosFiltrados
             }
         }

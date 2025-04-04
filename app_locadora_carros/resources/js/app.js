@@ -56,6 +56,10 @@ import Clientes from './components/Clientes.vue';
 app.component('clientes-component', Clientes);
 import Modelos from './components/Modelos.vue';
 app.component('modelos-component', Modelos);
+import Carros from './components/Carros.vue';
+app.component('carros-component', Carros);
+import Locacoes from './components/Locacoes.vue';
+app.component('locacoes-component', Locacoes);
 
 /**
  * The following block of code may be used to automatically register your

@@ -37,7 +37,7 @@ class CarroController extends Controller
            $carroRepository->selectAtributos($request->atributos);
         } 
 
-        return response()->json($carroRepository->getResultado(), 200);
+        return response()->json($carroRepository->getResultadoPaginado(3), 200);
     }
 
     /**
@@ -69,7 +69,7 @@ class CarroController extends Controller
      */
     public function show($id)
     {
-        $carro = $this->carro->with('modelo')->find($id);
+        $carro = $this->carro->with('modelo')->with('locacoes')->find($id);
 
         if($carro === null){
             return response()->json(["erro" => "Recurso pesquisado não existe"] ,404);

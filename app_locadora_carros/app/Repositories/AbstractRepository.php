@@ -34,6 +34,11 @@ abstract class AbstractRepository {
     }
 
     public function getResultadoPaginado($numeroRegistroPorPagina){
+        
+        if(get_class($this->model) == "App\Models\Locacao"){
+            return $this->model->with('carro')->with('cliente')->paginate($numeroRegistroPorPagina);
+        }
+        
         return $this->model->paginate($numeroRegistroPorPagina);
     }
 }
