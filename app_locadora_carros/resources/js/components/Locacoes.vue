@@ -39,7 +39,7 @@
                                         :titulos="{
                             id: {titulo: 'ID', tipo: 'text', visivel: true},
                             cliente_id: {titulo: 'Cliente', tipo: 'text', visivel: true},
-                            carro_id: {titulo: 'Carro', tipo: 'text', visivel: true},
+                            carro_id: {titulo: 'Placa do carro', tipo: 'text', visivel: true},
                             data_inicio_periodo: {titulo: 'Inicio', tipo: 'data', visivel: false},
                             data_final_previsto_periodo: {titulo: 'Previsto', tipo: 'data', visivel: false},
                             data_final_realizado_periodo: {titulo: 'Final', tipo: 'data', visivel: false},
@@ -80,58 +80,47 @@
             
             <template v-slot:conteudo>
                 <div class="form-group">
-                    <input-container-component titulo="Nome do Locacação" id="novoNome" id-help="novonomeHelp" texto-ajuda="Informe o nome do Locacação">
-                        <input type="text" class="form-control" id="novoNome" aria-describedby="novonomeHelp" placeholder="Nome do Locacação" v-model="nomeModelo">
-                    </input-container-component>
-                </div>
-
-                <div class="form-group">
-                    <label for="" class="form-label">Marca</label>
-                    <select v-model="modeloMarca" class="form-select" aria-label="Default select example">
+                    <label for="" class="form-label">Cliente</label>
+                    <select v-model="locacaoCliente" class="form-select" aria-label="Default select example">
                         <option value="" disabled selected>Selecione</option>
-                        <option v-for="marca in marcas" :key="marca.id" :value="marca.id">{{ marca.nome }}</option>
+                        <option v-for="cliente in clientes" :key="cliente.id" :value="cliente.id">{{ cliente.nome }}</option>
                     </select>
-                    <small class="text-muted">Selecione a marca do carro</small>
+                    <small class="text-muted">Selecione o modelo do carro</small>
                 </div>
 
                 <div class="form-group">
-                    <input-container-component titulo="Imagem" id="novoImagem" id-help="novoImagemHelp" texto-ajuda="Selecione uma imagem no formato PNG">
-                        <input type="file" class="form-control" id="novoImagem" aria-describedby="novoImagemHelp" placeholder="Selecione uma imagem" @change="carregarImagem($event)">
+                    <label for="" class="form-label">Carro</label>
+                    <select v-model="locacaoCarro" class="form-select" aria-label="Default select example">
+                        <option value="" disabled selected>Selecione</option>
+                        <option v-for="carro in carros" :key="carro.id" :value="carro.id">Carro: {{ carro.modelo.nome }}, Placa: {{ carro.placa }}</option>
+                    </select>
+                    <small class="text-muted">Selecione o modelo do carro</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="form-label">Data de inicio</label>
+                    <input id="startDate" class="form-control" type="date" :value="dateNow" :min="dateNow" />
+                    <small class="text-muted">Selecione a data de inicio da locação</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="form-label">Data final prevista</label>
+                    <input id="startDate" class="form-control" type="date" :value="dateNow" :min="dateNow"/>
+                    <small class="text-muted">Selecione a data final prevista da locação</small>
+                </div>
+
+                <div class="form-group">
+                    <input-container-component titulo="Valor diaria" id="locacaoValorDiaria" id-help="locacaoValorDiariaHelp" texto-ajuda="Informe o valor da diaria">
+                        <input type="number" class="form-control" id="locacaoValorDiaria" aria-describedby="locacaoValorDiariaHelp" placeholder="Valor da diaria" v-model="locacaoValorDiaria">
                     </input-container-component>
                 </div>
 
                 <div class="form-group">
-                <input-container-component titulo="Número de portas" id="novoNumeroPortas" id-help="novoNumeroPortasHelp" texto-ajuda="Informe a quantidade de número de portas">
-                    <input type="number" class="form-control" id="novoNumeroPortas" aria-describedby="novoNumeroPortasHelp" placeholder="Quantidade portas" v-model="modeloNumeroPortas">
-                </input-container-component>
-            </div>
-
-            <div class="form-group">
-                <input-container-component titulo="Lugares" id="novoLugares" id-help="novoLugaresHelp" texto-ajuda="Informe a quantidade de lugares">
-                    <input type="number" class="form-control" id="novoLugares" aria-describedby="novoLugaresHelp" placeholder="Quantidade lugares" v-model="modeloLugares">
-                </input-container-component>
-            </div>
-
-            <div class="form-group">
-                <label for="" class="form-label">Air Bag</label>
-                <select v-model="modeloAirBag" class="form-select" aria-label="Default select example">
-                    <option value="" disabled selected>Selecione</option>
-                    <option value="0">Não</option>
-                    <option value="1">Sim</option>
-                </select>
-                <small class="text-muted">Selecione se o Locacação possui air bag</small>
-            </div>
-            
-            <div class="form-group">
-                <label for="" class="form-label">ABS</label>
-                <select v-model="modeloABS" class="form-select" aria-label="Default select example">
-                    <option value="" disabled selected>Selecione</option>
-                    <option value="0">Não</option>
-                    <option value="1">Sim</option>
-                </select>
-                <small class="text-muted">Selecione se o Locacação possui ABS</small>
-            </div>
-
+                    <input-container-component titulo="Km inicial" id="locacaoKmInicial" id-help="locacaoKmInicialHelp" texto-ajuda="Informe a kilometragem inicial">
+                        <input type="number" class="form-control" id="locacaoValorDiaria" aria-describedby="locacaoValorDiariaHelp" placeholder="Valor da diaria" v-model="locacaoValorDiaria">
+                    </input-container-component>
+                </div>
+                
             </template>
             <template v-slot:rodape>
                 <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
@@ -150,36 +139,40 @@
                     <input type="text" :value="$store.state.item.id" disabled class="form-control">
                 </input-container-component>
 
-                <input-container-component titulo="Marca">
-                <img :src="'/storage/'+$store.state.item.marca_id" v-if="$store.state.item.marca_id" width="50" height="50">
+                <input-container-component titulo="Placa do carro">
+                    <input type="text" :value="$store.state.item.carro_id" disabled class="form-control">
                 </input-container-component>
 
-                <input-container-component titulo="Nome do Locacação">
-                    <input type="text" :value="$store.state.item.nome" disabled class="form-control">
+                <input-container-component titulo="Nome do cliente">
+                    <input type="text" :value="$store.state.item.cliente_id" disabled class="form-control">
                 </input-container-component>
 
-                <input-container-component titulo="Imagem">                    
-                    <img :src="'/storage/'+$store.state.item.imagem" v-if="$store.state.item.imagem" width="50" height="50">
+                <input-container-component titulo="Data de inicio locação">
+                    <span class="form-control bg-body-secondary ">{{ formatarDatas($store.state.item.data_inicio_periodo) }}</span>
+                </input-container-component>
+
+                <input-container-component titulo="Data final prevista de locação">
+                    <span class="form-control bg-body-secondary ">{{ formatarDatas($store.state.item.data_final_previsto_periodo) }}</span>
+                </input-container-component>
+
+                <input-container-component titulo="Data final realizada de locação">
+                    <span class="form-control bg-body-secondary ">{{ formatarDatas($store.state.item.data_final_realizado) }}</span>
+                </input-container-component>
+
+                <input-container-component titulo="Valor diaria">
+                    <input type="text" :value="$store.state.item.valor_diaria" disabled class="form-control">
+                </input-container-component>
+
+                <input-container-component titulo="Km inicial">
+                    <input type="text" :value="$store.state.item.km_inicial" disabled class="form-control">
+                </input-container-component>
+
+                <input-container-component titulo="Km final">
+                    <input type="text" :value="$store.state.item.km_final" disabled class="form-control">
                 </input-container-component>
 
                 <input-container-component titulo="Data de criação">
                     <span class="form-control bg-body-secondary ">{{ formatarDatas($store.state.item.created_at) }}</span>
-                </input-container-component>
-
-                <input-container-component titulo="Número de portas">
-                    <input type="text" :value="$store.state.item.numero_portas" disabled class="form-control">
-                </input-container-component>
-
-                <input-container-component titulo="Lugares">
-                    <input type="text" :value="$store.state.item.lugares" disabled class="form-control">
-                </input-container-component>
-
-                <input-container-component titulo="Air Bag">
-                    <input type="text" :value="$store.state.item.air_bag ? 'Sim' : 'Não' " disabled class="form-control">
-                </input-container-component>
-
-                <input-container-component titulo="ABS">
-                    <input type="text" :value="$store.state.item.abs ? 'Sim' : 'Não' " disabled class="form-control">
                 </input-container-component>
 
             </template>
@@ -202,36 +195,40 @@
                     <input type="text" :value="$store.state.item.id" disabled class="form-control">
                 </input-container-component>
 
-                <input-container-component titulo="Marca">
-                <img :src="'/storage/'+$store.state.item.marca_id" v-if="$store.state.item.marca_id" width="50" height="50">
+                <input-container-component titulo="Placa do carro">
+                    <input type="text" :value="$store.state.item.carro_id" disabled class="form-control">
                 </input-container-component>
 
-                <input-container-component titulo="Nome do Locacação">
-                    <input type="text" :value="$store.state.item.nome" disabled class="form-control">
+                <input-container-component titulo="Nome do cliente">
+                    <input type="text" :value="$store.state.item.cliente_id" disabled class="form-control">
                 </input-container-component>
 
-                <input-container-component titulo="Imagem">                    
-                    <img :src="'/storage/'+$store.state.item.imagem" v-if="$store.state.item.imagem" width="50" height="50">
+                <input-container-component titulo="Data de inicio locação">
+                    <span class="form-control bg-body-secondary ">{{ formatarDatas($store.state.item.data_inicio_periodo) }}</span>
+                </input-container-component>
+
+                <input-container-component titulo="Data final prevista de locação">
+                    <span class="form-control bg-body-secondary ">{{ formatarDatas($store.state.item.data_final_previsto_periodo) }}</span>
+                </input-container-component>
+
+                <input-container-component titulo="Data final realizada de locação">
+                    <span class="form-control bg-body-secondary ">{{ formatarDatas($store.state.item.data_final_realizado) }}</span>
+                </input-container-component>
+
+                <input-container-component titulo="Valor diaria">
+                    <input type="text" :value="$store.state.item.valor_diaria" disabled class="form-control">
+                </input-container-component>
+
+                <input-container-component titulo="Km inicial">
+                    <input type="text" :value="$store.state.item.km_inicial" disabled class="form-control">
+                </input-container-component>
+
+                <input-container-component titulo="Km final">
+                    <input type="text" :value="$store.state.item.km_final" disabled class="form-control">
                 </input-container-component>
 
                 <input-container-component titulo="Data de criação">
-                    <input type="text" :value="$store.state.item.created_at" disabled class="form-control">
-                </input-container-component>
-
-                <input-container-component titulo="Número de portas">
-                    <input type="text" :value="$store.state.item.numero_portas" disabled class="form-control">
-                </input-container-component>
-
-                <input-container-component titulo="Lugares">
-                    <input type="text" :value="$store.state.item.lugares" disabled class="form-control">
-                </input-container-component>
-
-                <input-container-component titulo="Air Bag">
-                    <input type="text" :value="$store.state.item.air_bag ? 'Sim' : 'Não' " disabled class="form-control">
-                </input-container-component>
-
-                <input-container-component titulo="ABS">
-                    <input type="text" :value="$store.state.item.abs ? 'Sim' : 'Não' " disabled class="form-control">
+                    <span class="form-control bg-body-secondary ">{{ formatarDatas($store.state.item.created_at) }}</span>
                 </input-container-component>
 
             </template>
@@ -321,18 +318,21 @@ import { useDateFormat } from '@vueuse/core'
                 urlBaseClientes: "http://localhost:8000/api/v1/clientes-lista",
                 urlPaginacao: '',
                 urlFiltro: '',
-                nomeModelo: '',
-                modeloNumeroPortas: '',
-                modeloABS: '',
-                modeloAirBag: '',
-                modeloMarca: '',
-                modeloLugares: '',
-                arquivoImagem: [],
+                locacaoCarro: '',
+                locacaoCliente: '',
+                locacaoDataInicio: '',
+                locacaoDataPrevista: '',
+                locacaoValor: '',
+                locacaoKmInicial: '',
+                locacaoKmFinal: '',
                 transacaoStatus: '',
                 transacaoDetalhes: {},
                 locacoes: { data: [] },
+                clientes: [],
+                carros: [],
                 marcas: [],
-                busca: { id: '', nome: '' }
+                busca: { id: '', nome: '' },
+                dateNow: this.formatarDatasAgora(Date.now())
             }
         },
         methods: {
@@ -340,21 +340,25 @@ import { useDateFormat } from '@vueuse/core'
                 const formattedDate = useDateFormat(d, "DD/MM/YYYY HH:mm:ss")
                 return formattedDate
             },
+            formatarDatasAgora(d){
+                const formattedDate = useDateFormat(d, "YYYY-MM-DD")
+                return formattedDate
+            },
             carregarCarros(){
-
-                axios.get(this.urlBaseMarca)
+                axios.get(this.urlBaseCarros)
                     .then(response => {
                         this.carros = response.data
+                        console.log(this.carros)
                     }) 
                     .catch(errors => {
                         console.log(errors)
                     })
             },
             carregarClientes(){
-
-            axios.get(this.urlBaseMarca)
+            axios.get(this.urlBaseClientes)
                 .then(response => {
                     this.clientes = response.data
+                    
                 }) 
                 .catch(errors => {
                     console.log(errors)
@@ -393,12 +397,9 @@ import { useDateFormat } from '@vueuse/core'
                         this.$store.state.transacao.status = 'erro'
                         this.$store.state.transacao.mensagem = errors.response.data.message
                         this.$store.state.transacao.dados = errors.response.data.errors
-        
                     })
-                
             },
             fechar(){
-                novoImagem.value = '',
                 this.transacaoStatus = '',
                 this.transacaoDetalhes = {},
                 this.nomeModelo = '',
@@ -469,13 +470,14 @@ import { useDateFormat } from '@vueuse/core'
                 axios.get(url)
                     .then(response => {
                         this.locacoes = response.data
-                        console.log(this.locacoes)
+                       
 
                     }) 
                     .catch(errors => {
                         console.log(errors)
                     })
-            },
+                    
+            },  
             carregarImagem(e){
                 this.arquivoImagem = e.target.files
             },

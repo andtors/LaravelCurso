@@ -134,4 +134,11 @@ class CarroController extends Controller
 
         return response()->json(['msg'  => 'O carro foi deletada com sucesso!'], 200);
     }
+
+    public function getCarroNomeId()
+    {
+        $carros = $this->carro->with('modelo')->get();
+
+        return response()->json($carros);
+    }
 }

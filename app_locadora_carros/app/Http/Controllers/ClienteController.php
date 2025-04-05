@@ -126,4 +126,11 @@ class ClienteController extends Controller
 
         return response()->json(['msg'  => 'O Cliente foi deletada com sucesso!'], 200);
     }
+
+    public function getClienteNomeId()
+    {
+        $clienteRepository = new ClienteRepository($this->cliente);
+
+        return response()->json($clienteRepository->getResultado());
+    }
 }

@@ -34,6 +34,8 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     Route::apiResource('modelo', ModeloController::class);
     Route::get('marcas-lista', [MarcaController::class, 'getMarcaNomeId']);
     Route::get('modelos-lista', [ModeloController::class, 'getModeloNomeId']);
+    Route::get('carros-lista', [CarroController::class, 'getCarroNomeId']);
+    Route::get('clientes-lista', [ClienteController::class, 'getClienteNomeId']);
 });
 
 Route::post('login', [AuthController::class, 'login']);

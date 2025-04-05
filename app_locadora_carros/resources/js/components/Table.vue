@@ -15,10 +15,10 @@
             </thead>
             <tbody>
                 <tr v-for="obj, chave in dadosFiltrados" :key="chave">
-                    
+    
                     <td v-for="valor, chaveValor in obj" :key="chaveValor">
                         
-                        <span v-if="titulos[chaveValor].tipo == 'text' && titulos[chaveValor].visivel == true && titulos[chaveValor].titulo != 'Disponivel'">{{ valor }}</span>
+                        <span v-if="titulos[chaveValor].tipo == 'text' && titulos[chaveValor].visivel == true && titulos[chaveValor].titulo != 'Disponivel' ">{{ valor }}</span>
                         <span v-if="titulos[chaveValor].titulo == 'Disponivel'">{{ valor == 0 ? 'Livre' : 'Alugado' }}</span>
                         <span v-if="titulos[chaveValor].tipo == 'imagem'">
                             <img :src="'/storage/'+valor" width="50" height="50">
@@ -32,26 +32,21 @@
                 </tr>
             </tbody>
         </table>
+        
     </div>
 </template>
 
 <script>
-import { useDateFormat } from '@vueuse/core'
-
     export default {
         props: ['dados', 'titulos', 'visualizar', 'atualizar', 'remover'],
         methods: {
+             
             setStore(obj){
                 this.$store.state.transacao.status = ''
                 this.$store.state.transacao.mensagem = ''
                 this.$store.state.transacao.dados = ''
                 this.$store.state.item = obj
             },
-            formatarData(d){
-                const formattedDate = useDateFormat(d, "DD/MM/YYYY HH:mm:ss");
-
-                return formattedDate
-            }
         },  
         computed: {
             dadosFiltrados(){
@@ -78,6 +73,10 @@ import { useDateFormat } from '@vueuse/core'
 
                        if(campo == 'cliente_id'){
                             itemFiltrado[campo] = item.cliente.nome
+                       }
+
+                       if(campo == 'carro_id'){
+                            itemFiltrado[campo] = item.carro.placa
                        }
                     })
                     
