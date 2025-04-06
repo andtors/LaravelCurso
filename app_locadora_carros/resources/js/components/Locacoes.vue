@@ -85,14 +85,16 @@
                         <option value="" disabled selected>Selecione</option>
                         <option v-for="cliente in clientes" :key="cliente.id" :value="cliente.id">{{ cliente.nome }}</option>
                     </select>
-                    <small class="text-muted">Selecione o modelo do carro</small>
+                    <small class="text-muted">Selecione o cliente</small>
                 </div>
 
                 <div class="form-group">
                     <label for="" class="form-label">Carro</label>
                     <select v-model="locacaoCarro" class="form-select" aria-label="Default select example">
                         <option value="" disabled selected>Selecione</option>
-                        <option v-for="carro in carros" :key="carro.id" :value="carro.id">Carro: {{ carro.modelo.nome }}, Placa: {{ carro.placa }}</option>
+                        <option v-for="carro in carros" :key="carro.id" :value="carro.id">
+                            <span v-if="carro.disponivel == 0">Carro: {{ carro.modelo.nome }}, Placa: {{ carro.placa }}</span>
+                        </option>
                     </select>
                     <small class="text-muted">Selecione o modelo do carro</small>
                 </div>
