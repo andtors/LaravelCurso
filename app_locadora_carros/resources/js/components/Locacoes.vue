@@ -249,9 +249,11 @@
         </template>
         <template v-slot:conteudo  v-if="$store.state.transacao.status != 'sucesso'">
             <div class="form-group">
+                
                 <input-container-component titulo="Nome do Locacação" id="atualizarNome" id-help="atualizarnomeHelp" texto-ajuda="Informe o novo nome do Locacação">
                     <input type="text" class="form-control" id="atualizarNome" aria-describedby="atualizarnomeHelp" placeholder="Nome do Locacação" v-model="$store.state.item.nome">
                 </input-container-component>
+
             </div>
 
             <div class="form-group">
